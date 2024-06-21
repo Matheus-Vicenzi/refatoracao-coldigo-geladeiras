@@ -1,0 +1,12 @@
+services:
+  db:
+    container_name: mysql-coldigo
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bdcoldigo
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql_data:/var/lib/mysql
