@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.coldigo.br.coldigo.dto.ProdutoOutDTO;
 import com.coldigo.br.coldigo.jdbcinterface.ProdutoDAO;
 import com.coldigo.br.coldigo.modelo.Produto;
 
@@ -19,11 +20,15 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 		this.conexao = conexao;
 	}
 
-	public List<Produto> buscar() {
+	public List<ProdutoOutDTO> buscar(String valorBusca) {
+		List<ProdutoOutDTO> listProdutos = new ArrayList<ProdutoOutDTO>();
 
-		String comando = "SELECT * FROM produtos";
-		List<Produto> listProdutos = new ArrayList<Produto>();
-		Produto produto = null;
+		String comando = "SELECT p.*, m.nome FROM produtos p JOIN marcas m ON p.marcas_id = m.id";
+
+		if (!valorBusca.equals("") && valorBusca != null) {
+			comando += " WHERE modelo LIKE '%" + valorBusca + "%'";
+		}
+		ProdutoOutDTO produto = null;
 		try {
 
 			Statement stmt = conexao.createStatement();
@@ -31,13 +36,14 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 			ResultSet rs = stmt.executeQuery(comando);
 
 			while (rs.next()) {
-				produto = new Produto();
+				produto = new ProdutoOutDTO();
 				int id = rs.getInt("id");
 				String categoria = rs.getString("categoria");
 				String modelo = rs.getString("modelo");
 				int capacidade = rs.getInt("capacidade");
 				float valor = rs.getFloat("valor");
 				int marcaId = rs.getInt("marcas_id");
+				String marcaNome = rs.getString("nome");
 
 				produto.setId(id);
 				produto.setCategoria(categoria);
@@ -45,6 +51,7 @@ public class JDBCProdutoDAO implements ProdutoDAO {
 				produto.setCapacidade(capacidade);
 				produto.setValor(valor);
 				produto.setMarcaId(marcaId);
+				produto.setMarcaNome(marcaNome);
 
 				listProdutos.add(produto);
 			}

@@ -1,39 +1,37 @@
-<img src="/imgs/logo.png" alt="Logo coldigo">
-<h1>Coldigo Geladeiras - Administração</h1>
-<nav>
-	<div class="opcao dropdown">
-		<a href="#">
-			<div class="dropbtn">Registros</div>
-		</a>
-		<div class="dropdown-content">
-			<a href="#" onclick="COLDIGO.carregaPagina('brand')">Marca</a>
-			<a href="#" onclick="COLDIGO.carregaPagina('product')">Produto</a>
-			<a href="#">Usuário</a>
+<div class="d-flex align-items-center mb-4">
+	<img src="/imgs/logo.png" alt="Logo coldigo" class="mr-3">
+	<h1>Coldigo Geladeiras - Administração</h1>
+</div>
+
+<nav class="mb-4">
+	<div class="nav nav-pills">
+		<div class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="registrosDropdown" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">Registros</a>
+			<div class="dropdown-menu" aria-labelledby="registrosDropdown">
+				<a class="dropdown-item" href="#" onclick="COLDIGO.carregaPagina('brand')">Marca</a>
+				<a class="dropdown-item" href="#" onclick="COLDIGO.carregaPagina('product')">Produto</a>
+				<a class="dropdown-item" href="#">Usuário</a>
+			</div>
 		</div>
-	</div>
-	<div class="opcao dropdown">
-		<a href="#">
-			<div class="dropbtn">Gerenciar</div>
-		</a>
-		<div class="dropdown-content">
-			<a href="#">Compras</a>
-			<a href="#">Fale conosco</a>
+		<div class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="gerenciarDropdown" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">Gerenciar</a>
+			<div class="dropdown-menu" aria-labelledby="gerenciarDropdown">
+				<a class="dropdown-item" href="#">Compras</a>
+				<a class="dropdown-item" href="#">Fale conosco</a>
+			</div>
 		</div>
-	</div>
-	<div class="opcao dropdown">
-		<a href="#">
-			<div class="dropbtn">Relatórios</div>
-		</a>
-		<div class="dropdown-content">
-			<a href="#">Produtos</a>
-			<a href="#">Compras</a>
-			<a href="#">Fale conosco</a>
+		<div class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="relatoriosDropdown" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">Relatórios</a>
+			<div class="dropdown-menu" aria-labelledby="relatoriosDropdown">
+				<a class="dropdown-item" href="#">Produtos</a>
+				<a class="dropdown-item" href="#">Compras</a>
+				<a class="dropdown-item" href="#">Fale conosco</a>
+			</div>
 		</div>
+		<a class="nav-link" href="#">Meus dados</a>
+		<a class="nav-link" href="../../index.html">Sair</a>
 	</div>
-	<a href="#">
-		<div class="opcao">Meus dados</div>
-	</a>
-	<a href="../../index.html">
-		<div class="opcao">Sair</div>
-	</a>
 </nav>

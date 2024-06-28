@@ -14,7 +14,7 @@ $(document).ready(function () {
 			type: "GET",
 			url: COLDIGO.PATH + "marca/buscar",
 			success: function (marcas) {
-
+				marcas = JSON.parse(marcas);
 				if (marcas != "") {
 
 					$(select).html("");
@@ -27,9 +27,9 @@ $(document).ready(function () {
 						var option = document.createElement("option");
 						option.setAttribute("value", marcas[i].id);
 
-						if ((id != undefined) && (id == marcas[i].id))
+						if ((id != undefined) && (id == marcas[i].id)) {
 							option.setAttribute("selected", "selected");
-
+						}
 						option.innerHTML = (marcas[i].nome);
 						$(select).append(option);
 					}
@@ -69,10 +69,10 @@ $(document).ready(function () {
 
 		var produto = new Object();
 		produto.categoria = document.frmAddProduto.categoria.value;
-		produto.marcaId = document.frmAddProduto.marcaId.value;
+		produto.marcaId = parseInt(document.frmAddProduto.marcaId.value);
 		produto.modelo = document.frmAddProduto.modelo.value;
-		produto.capacidade = document.frmAddProduto.capacidade.value;
-		produto.valor = document.frmAddProduto.valor.value;
+		produto.capacidade = parseInt(document.frmAddProduto.capacidade.value);
+		produto.valor = parseFloat(document.frmAddProduto.valor.value);
 
 		/*verificar se ficou campo vazio*/
 		if ((produto.categoria == "") || (produto.marcaId == "") || (produto.modelo == "") || (produto.capacidade == "") || (produto.valor == "")) {
@@ -85,6 +85,7 @@ $(document).ready(function () {
 				type: "POST",
 				/* indicação estática do caminho PATH*/
 				url: COLDIGO.PATH + "produto/inserir",
+				contentType: "application/json",
 
 				/*transforma o objeto produto numa String em formato JSON*/
 				data: JSON.stringify(produto),
@@ -103,10 +104,8 @@ $(document).ready(function () {
 
 	COLDIGO.produto.buscar = function () {
 
-		/*recebendo o valor digitado no filtro*/
 		var valorBusca = $("#campoBuscaProduto").val();
 
-		/*solicita ao servidor os dados dos produtos registrados*/
 		$.ajax({
 
 			type: "GET",
@@ -114,11 +113,9 @@ $(document).ready(function () {
 			data: "valorBusca=" + valorBusca,
 			success: function (dados) {
 
-				/*realizando a busca*/
-				/*JSON.parse para identificar dados que estão no formato JSON*/
 				dados = JSON.parse(dados);
+				console.log(dados);
 
-				/*!!!!!!!!!!!*/
 				$("#listaProdutos").html(COLDIGO.produto.exibir(dados));
 
 			},
@@ -132,16 +129,7 @@ $(document).ready(function () {
 	/*!!!!!!!!!!!*/
 	/*recebendo como parametro listaDeProduto que é a resposta do servidor*/
 	COLDIGO.produto.exibir = function (listaDeProdutos) {
-
-		var tabela = "<table>" +
-			"<tr>" +
-			"<th>Categoria</th>" +
-			"<th>Marca</th>" +
-			"<th>Modelo</th>" +
-			"<th>Cap.(1)</th>" +
-			"<th>Valor</th>" +
-			"<th class='acoes'>Ações</th>" +
-			"</tr>";
+		var tabela = ""
 
 		if (listaDeProdutos != undefined && listaDeProdutos.length > 0) {
 

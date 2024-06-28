@@ -37,6 +37,8 @@ public class MarcaRest extends UtilRest {
 			listaMarcas = jdbcMarca.buscar();
 			conec.fecharConexao();
 
+			System.err.println("Lista de marcas: " + listaMarcas);
+
 			return this.buildResponse(listaMarcas);
 		} catch (Exception e) {
 			e.printStackTrace();

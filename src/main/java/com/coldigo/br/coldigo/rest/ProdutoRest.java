@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coldigo.br.coldigo.db.Conexao;
+import com.coldigo.br.coldigo.dto.ProdutoOutDTO;
 import com.coldigo.br.coldigo.jdbc.JDBCProdutoDAO;
 import com.coldigo.br.coldigo.modelo.Produto;
 import com.google.gson.Gson;
@@ -23,10 +24,10 @@ import com.google.gson.Gson;
 @RequestMapping(value = "/produto")
 public class ProdutoRest extends UtilRest {
 
-    @PostMapping(path = "/inserir", consumes = "application/*")
-    public ResponseEntity<?> inserir(@RequestBody String json) {
+    @PostMapping(path = "/inserir", consumes = "application/json")
+    public ResponseEntity<?> inserir(@RequestBody Produto produto) {
         try {
-            Produto produto = new Gson().fromJson(json, Produto.class);
+            // Produto produto = new Gson().fromJson(json, Produto.class);
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
 
@@ -52,14 +53,19 @@ public class ProdutoRest extends UtilRest {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<?> buscar() {
+    public ResponseEntity<?> buscar(@PathVariable(name = "valorBusca", required = false) String valorBusca) {
         try {
-            List<Produto> listaProduto = new ArrayList<Produto>();
+            if (valorBusca == null) {
+                valorBusca = "";
+            }
+
+            List<ProdutoOutDTO> listaProduto = new ArrayList<ProdutoOutDTO>();
 
             Conexao conec = new Conexao();
             Connection conexao = conec.abrirConexao();
             JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-            listaProduto = jdbcProduto.buscar();
+            listaProduto = jdbcProduto.buscar(valorBusca);
+
             conec.fecharConexao();
 
             return this.buildResponse(listaProduto);
