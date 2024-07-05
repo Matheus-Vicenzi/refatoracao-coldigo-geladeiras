@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coldigo.br.coldigo.db.Conexao;
@@ -53,7 +54,7 @@ public class ProdutoRest extends UtilRest {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<?> buscar(@PathVariable(name = "valorBusca", required = false) String valorBusca) {
+    public ResponseEntity<?> buscar(@RequestParam(name = "valorBusca", required = false) String valorBusca) {
         try {
             if (valorBusca == null) {
                 valorBusca = "";
@@ -86,6 +87,10 @@ public class ProdutoRest extends UtilRest {
             JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
             produto = jdbcProduto.buscarPorId(id);
             conec.fecharConexao();
+
+            if (produto == null) {
+                return ResponseEntity.notFound().build();
+            }
 
             return this.buildResponse(produto);
 

@@ -10,3 +10,9 @@ header img{
 	width: 100px;
 	margin: 10px;
 }
+
+.icone{
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+}

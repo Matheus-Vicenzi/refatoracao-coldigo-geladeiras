@@ -50,19 +50,15 @@ public class JDBCMarcaDAO implements MarcaDAO {
 	}
 
 	public boolean inserir(Marca marca) {
-		String comando = "INSERT INTO marcas" + "(id, nome, status)" + "VALUES(?,?,?)";
+		int status = 1; // 1 = ativo, 0 = inativo
 
-		PreparedStatement p;
+		String comando = "INSERT INTO marcas (nome, status) VALUES(?,?)";
 
 		try {
-
-			p = this.conexao.prepareStatement(comando);
-			p.setInt(1, marca.getId());
-			p.setString(2, marca.getNome());
-			p.setInt(3, 1);
-
+			PreparedStatement p = this.conexao.prepareStatement(comando);
+			p.setString(1, marca.getNome());
+			p.setInt(2, status);
 			p.execute();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -155,7 +151,10 @@ public class JDBCMarcaDAO implements MarcaDAO {
 	}
 
 	public boolean inativar(int id) {
-		String comando = "UPDATE marcas " + "SET status = CASE WHEN status = 0 THEN 1 ELSE 0 END" + " WHERE id = ?";
+		String comando = "UPDATE marcas "
+				+ "SET status = CASE WHEN status = 0 THEN 1 "
+				+ "WHEN status = 1 THEN 0 END "
+				+ "WHERE id = ?;";
 
 		PreparedStatement p;
 		try {

@@ -6,8 +6,6 @@ $(document).ready(() => {
 
 		var marca = {};
 		marca.nome = document.frmAddMarca.nome.value;
-		marca.data = document.frmAddMarca.data.value;
-		console.log("AAAAAAAAAA")
 
 		if ((marca.nome == "") || (marca.data == "")) {
 			COLDIGO.exibirAviso("Preencha todos os campos");
@@ -21,6 +19,7 @@ $(document).ready(() => {
 				success: (msg) => {
 					COLDIGO.exibirAviso(msg);
 					$("#addMarca").trigger("reset");
+					COLDIGO.marca.buscar();
 				},
 				error: () => {
 					COLDIGO.exibirAviso(msg);
@@ -49,13 +48,7 @@ $(document).ready(() => {
 
 	COLDIGO.marca.exibir = (listaDeMarcas) => {
 
-		var tabela = "<table>" +
-			"<tr>" +
-			"<th>Nome</th>" +
-			"<th>Data</th>" +
-			"<th class='acoes'>Ações</th>" +
-			"<th class='acoes'>Status</th>" +
-			"</tr>";
+		var tabela = ""
 
 		if (listaDeMarcas != undefined && listaDeMarcas.length > 0) {
 
@@ -67,10 +60,9 @@ $(document).ready(() => {
 
 				tabela += "<tr>" +
 					"<td>" + listaDeMarcas[i].nome + "</td>" +
-					"<td>" + listaDeMarcas[i].data + "</td>" +
 					"<td>" +
-					"<a onclick=\"COLDIGO.marca.exibirEdicao('" + listaDeMarcas[i].id + "')\"><img src='../../imgs/edit.png' alt='Editar registro'></a> " +
-					"<a onclick=\"COLDIGO.marca.excluir('" + listaDeMarcas[i].id + "')\"><img src='../../imgs/delete.png' alt='Excluir registro'></a>" +
+					"<a onclick=\"COLDIGO.marca.exibirEdicao('" + listaDeMarcas[i].id + "')\"><img src='../../imgs/edit.png' class='icone' alt='Editar registro'></a> " +
+					"<a onclick=\"COLDIGO.marca.excluir('" + listaDeMarcas[i].id + "')\"><img src='../../imgs/delete.png' class='icone' alt='Excluir registro'></a>" +
 					"</td>" +
 					"<td>" +
 					"<label class='switch'>" +

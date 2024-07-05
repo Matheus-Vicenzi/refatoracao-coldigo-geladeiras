@@ -93,6 +93,7 @@ $(document).ready(function () {
 				success: function (msg) {/*exibe o modal e reseta o form*/
 					COLDIGO.exibirAviso(msg);
 					$("#addProduto").trigger("reset");
+					COLDIGO.produto.buscar();
 				},
 				error: function () {
 					COLDIGO.exibirAviso(msg);
@@ -112,12 +113,8 @@ $(document).ready(function () {
 			url: COLDIGO.PATH + "produto/buscar",
 			data: "valorBusca=" + valorBusca,
 			success: function (dados) {
-
 				dados = JSON.parse(dados);
-				console.log(dados);
-
 				$("#listaProdutos").html(COLDIGO.produto.exibir(dados));
-
 			},
 			error: function (info) {
 				COLDIGO.exibirAviso("Erro ao consultar os contatos: " + info.status + " - " + info.statusText);
@@ -143,9 +140,9 @@ $(document).ready(function () {
 					"<td>" + listaDeProdutos[i].capacidade + "</td>" +
 					"<td> R$ " + COLDIGO.formatarDinheiro(listaDeProdutos[i].valor) + "</td>" +
 					"<td>" +
-					"<a onclick=\"COLDIGO.produto.exibirEdicao('" + listaDeProdutos[i].id + "')\"><img src='../../imgs/edit.png' alt='Editar registro'></a> " +
+					"<a onclick=\"COLDIGO.produto.exibirEdicao('" + listaDeProdutos[i].id + "')\"><img src='../../imgs/edit.png' alt='Editar registro' class='icone'></a> " +
 					/*aqui onde é acionado o evento deletar que recebe como parametro o id que foi selecionado*/
-					"<a onclick=\"COLDIGO.produto.excluir('" + listaDeProdutos[i].id + "')\"><img src='../../imgs/delete.png' alt='Excluir registro'></a>" +
+					"<a onclick=\"COLDIGO.produto.excluir('" + listaDeProdutos[i].id + "')\"><img src='../../imgs/delete.png' alt='Excluir registro' class='icone'></a>" +
 					"</td>" +
 					"</tr>"
 			}
@@ -186,11 +183,9 @@ $(document).ready(function () {
 	COLDIGO.produto.exibirEdicao = function (id) {
 		$.ajax({
 			type: "GET",
-			url: COLDIGO.PATH + "produto/buscarPorId",
-			data: "id=" + id,
+			url: COLDIGO.PATH + `produto/buscarPorId/${id}`,
 			success: function (produto) {
 
-				console.log(produto);
 				document.frmEditaProduto.idProduto.value = produto.id;
 				document.frmEditaProduto.modelo.value = produto.modelo;
 				document.frmEditaProduto.capacidade.value = produto.capacidade;

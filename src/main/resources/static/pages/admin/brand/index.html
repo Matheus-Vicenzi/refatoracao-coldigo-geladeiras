@@ -1,49 +1,81 @@
 <script src="../../js/brand.js"></script>
-<h2>Registro de marcas</h2>
-<form name="frmAddMarca" id="addMarca" class="frmInserir">
-	<fieldset>
-		<legend>Nova Marca</legend>
-		<table>
+<div class="container mt-5">
 
+	<h2>Registro de marcas</h2>
+	<form name="frmAddMarca" id="addMarca" class="frmInserir">
+		<fieldset class="border p-3 mb-3">
+			<legend class="w-auto">Nova Marca</legend>
+
+			<div class="form-group row">
+				<label for="marca" class="col-sm-2 col-form-label">Nome</label>
+				<div class="col-sm-10">
+					<input type="text" name="nome" class="form-control">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-10 offset-sm-2">
+					<button type="button" class="btn btn-primary" onclick="COLDIGO.marca.cadastrar()">Cadastrar</button>
+					<button type="reset" class="btn btn-secondary">Limpar</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+
+	<h3>Marcas registradas</h3>
+	<form id="filtraMarca" class="frmFiltrar">
+		<fieldset class="border p-3 mb-3">
+			<legend class="w-auto">Filtrar</legend>
+			<div class="form-group row">
+				<div class="col-sm-10">
+					<input type="text" name="txtbusca" id="campoBuscaMarca" class="form-control"
+						placeholder="Pesquise pelo marca">
+				</div>
+				<div class="col-sm-2">
+					<button type="button" class="btn btn-primary" onclick="COLDIGO.marca.buscar()">Buscar</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+
+	<table class="table table-bordered">
+		<thead class="thead-light">
 			<tr>
 				<th>Nome</th>
-				<td><input type="text" name="nome"></td>
+				<th>Ações</th>
+				<th>Ativo</th>
 			</tr>
-			<tr>
-				<th>Data</th>
-				<td><input type="date" name="data"></td>
-			</tr>
+		</thead>
+		<tbody id="listaMarcas">
+			<!-- Os produtos serão inseridos aqui dinamicamente -->
 
-			<tr>
-				<td colspan="2">
-					<button type="button" onclick="COLDIGO.marca.cadastrar()">Cadastrar</button>
+			<!-- Exemplo de produto para visualização -->
+		</tbody>
+	</table>
 
-					<button type="reset">Limpar</button>
-				</td>
-			</tr>
-		</table>
-	</fieldset>
-</form>
-
-<h3>Marcas registradas</h3>
-<form id="filtraMarca" class="frmFiltrar">
-	<fieldset>
-		<legend>Filtrar</legend>
-		<input type="text" name="txtbusca" id="campoBuscaMarca" placeholder="Pesquise pela marca">
-		<button type="button" onclick="COLDIGO.marca.buscar()">Buscar</button>
-	</fieldset>
-</form>
-
-
-<div id="listaMarcas" class="listaRegistros"></div>
-<div id="modalEditaMarca" class="modalEditar">
-	<form name="frmEditaMarca" id="editaMarca" class="frmEditar">
-		<label>Marca</label>
-		<input type="text" name="nome">
-		<br>
-		<br>
-		<label>Data</label>
-		<input type="date" name="data">
-		<input type="hidden" name="idMarca">
-	</form>
+	<div id="modalEditaMarca" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Editar Marca</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form name="frmEditaMarca" id="editaMarca" class="frmEditar">
+						<div class="form-group">
+							<label for="marca">Modelo</label>
+							<input type="text" name="nome" class="form-control">
+						</div>
+						<input type="hidden" name="idMarca">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-primary">Salvar mudanças</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
